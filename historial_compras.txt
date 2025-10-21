@@ -1,0 +1,16 @@
+
+Compra 1:
+cliente: Camilo
+edad: 33
+ciudad: Bogotá
+cantidad_productos: 3
+total_compra: 57000
+-------------------------------
+
+Compra 2:
+cliente: Laura
+edad: 28
+ciudad: Medellín
+cantidad_productos: 2
+total_compra: 45000
+-------------------------------
