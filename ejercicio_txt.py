@@ -1,9 +1,11 @@
-print("📝 --- Editor de Notas Avanzado ---")
+from datetime import datetime
 
-nombre_archivo = "notas.txt"
+print("📝 --- Editor de Notas con Registro de Fecha y Hora ---")
+
+nombre_archivo = "notas_bitacora.txt"
 
 def leer_lineas():
-    """Lee todas las líneas y las retorna como lista"""
+    """Lee todas las líneas del archivo y las retorna como lista"""
     with open(nombre_archivo, "r", encoding="utf-8") as archivo:
         return archivo.readlines()
 
@@ -12,34 +14,36 @@ def guardar_lineas(lineas):
     with open(nombre_archivo, "w", encoding="utf-8") as archivo:
         archivo.writelines(lineas)
 
-# Crea el archivo si no existe
+# Crear el archivo si no existe
 open(nombre_archivo, "a").close()
 
 while True:
     print("\n📋 Menú de Opciones")
     print("------------------------------")
-    print("1. Agregar nueva línea")
-    print("2. Leer todo el contenido")
-    print("3. Editar línea específica")
-    print("4. Eliminar línea específica")
-    print("5. Mostrar posición del puntero")
+    print("1. Agregar nueva nota")
+    print("2. Leer todas las notas")
+    print("3. Editar nota existente")
+    print("4. Eliminar nota")
+    print("5. Ver posición del puntero")
     print("6. Salir")
     print("------------------------------")
 
     opcion = input("Selecciona una opción: ").strip()
 
     if opcion == "1":
-        texto = input("Escribe una línea nueva: ")
+        texto = input("✏️ Escribe tu nueva nota: ").strip()
+        fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        linea = f"[{fecha}] {texto}\n"
         with open(nombre_archivo, "a", encoding="utf-8") as archivo:
-            archivo.write(texto + "\n")
-        print("✅ Línea agregada correctamente.")
+            archivo.write(linea)
+        print("✅ Nota guardada correctamente.")
 
     elif opcion == "2":
         lineas = leer_lineas()
         if not lineas:
-            print("📭 El archivo está vacío.")
+            print("📭 No hay notas registradas.")
         else:
-            print("\n📄 Contenido del archivo:")
+            print("\n📄 Contenido de tus notas:")
             print("------------------------------")
             for i, linea in enumerate(lineas, start=1):
                 print(f"{i}. {linea.strip()}")
@@ -48,52 +52,53 @@ while True:
     elif opcion == "3":
         lineas = leer_lineas()
         if not lineas:
-            print("📭 No hay líneas para editar.")
+            print("📭 No hay notas para editar.")
             continue
 
         for i, linea in enumerate(lineas, start=1):
             print(f"{i}. {linea.strip()}")
 
         try:
-            num = int(input("Número de línea a editar: "))
+            num = int(input("Número de nota a editar: "))
             if 1 <= num <= len(lineas):
-                nuevo_texto = input("Escribe el nuevo contenido: ")
-                lineas[num - 1] = nuevo_texto + "\n"
+                nuevo_texto = input("Escribe el nuevo contenido: ").strip()
+                fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                lineas[num - 1] = f"[{fecha}] {nuevo_texto}\n"
                 guardar_lineas(lineas)
-                print("✏️ Línea actualizada correctamente.")
+                print("✏️ Nota actualizada correctamente.")
             else:
-                print("❌ Número de línea inválido.")
+                print("❌ Número de nota inválido.")
         except ValueError:
-            print("⚠️ Ingresa un número válido.")
+            print("⚠️ Debes ingresar un número válido.")
 
     elif opcion == "4":
         lineas = leer_lineas()
         if not lineas:
-            print("📭 No hay líneas para eliminar.")
+            print("📭 No hay notas para eliminar.")
             continue
 
         for i, linea in enumerate(lineas, start=1):
             print(f"{i}. {linea.strip()}")
 
         try:
-            num = int(input("Número de línea a eliminar: "))
+            num = int(input("Número de nota a eliminar: "))
             if 1 <= num <= len(lineas):
                 eliminado = lineas.pop(num - 1)
                 guardar_lineas(lineas)
-                print(f"🗑️ Línea eliminada: {eliminado.strip()}")
+                print(f"🗑️ Nota eliminada: {eliminado.strip()}")
             else:
-                print("❌ Número de línea inválido.")
+                print("❌ Número de nota inválido.")
         except ValueError:
             print("⚠️ Ingresa un número válido.")
 
     elif opcion == "5":
         with open(nombre_archivo, "r", encoding="utf-8") as archivo:
-            archivo.seek(0, 2)  # Mueve puntero al final
+            archivo.seek(0, 2)
             pos = archivo.tell()
             print(f"📍 El puntero está en la posición: {pos} bytes (final del archivo).")
 
     elif opcion == "6":
-        print("👋 Saliendo del editor de notas avanzado. ¡Hasta pronto!")
+        print("👋 Saliendo del editor de notas. ¡Hasta pronto!")
         break
 
     else:
