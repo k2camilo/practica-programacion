@@ -1,0 +1,5 @@
+hola este es mi primer archivo 
+Estoy aprendiendo manejo de archivos en python
+Esta es una nueva liena de texto
+Esta es una nueva liena de texto
+--Esta es una nueva liena de texto en medio--

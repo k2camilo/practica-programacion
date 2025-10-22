@@ -1,0 +1,4 @@
+Este es un nuevo archivo de texto 
+Este es una segunda linea de texto 
+Este es un nuevo archivo de texto 
+Este es una segunda linea de texto 
